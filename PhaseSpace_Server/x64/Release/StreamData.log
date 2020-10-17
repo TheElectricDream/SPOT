@@ -1,0 +1,35 @@
+﻿  StreamData.cc
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(117,21): warning C4251: 'OWL::MarkerInfo::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::MarkerInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(118,24): warning C4251: 'OWL::MarkerInfo::options': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::MarkerInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(126,21): warning C4251: 'OWL::TrackerInfo::type': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::TrackerInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(127,21): warning C4251: 'OWL::TrackerInfo::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::TrackerInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(128,24): warning C4251: 'OWL::TrackerInfo::options': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::TrackerInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(129,37): warning C4251: 'OWL::TrackerInfo::marker_ids': class 'std::vector<uint32_t,std::allocator<uint32_t>>' needs to have dll-interface to be used by clients of struct 'OWL::TrackerInfo'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(129): message : see declaration of 'std::vector<uint32_t,std::allocator<uint32_t>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(142,21): warning C4251: 'OWL::FilterInfo::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::FilterInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(143,24): warning C4251: 'OWL::FilterInfo::options': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::FilterInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(153,21): warning C4251: 'OWL::DeviceInfo::type': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::DeviceInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(154,21): warning C4251: 'OWL::DeviceInfo::name': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::DeviceInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(155,24): warning C4251: 'OWL::DeviceInfo::options': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::DeviceInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\owl.hpp(156,23): warning C4251: 'OWL::DeviceInfo::status': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of struct 'OWL::DeviceInfo'
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\include\xstring(4471): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(248,107): warning C4244: '=': conversion from '_Rep' to 'double', possible loss of data
+          with
+          [
+              _Rep=__int64
+          ]
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(57,10): warning C4101: 'host_name': unreferenced local variable
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(59,13): warning C4101: 'start': unreferenced local variable
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(56,21): warning C4101: 'hp': unreferenced local variable
+LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+  StreamData.vcxproj -> C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\x64\Release\StreamData.exe
