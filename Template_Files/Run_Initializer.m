@@ -23,9 +23,9 @@ fprintf('|Authors (v3.0): Alex Crain                                      |\n')
 fprintf('|Authors (v2.0): Alex Crain and Kirk Hovell                      |\n')
 fprintf('|Authors (Legacy): Dave Rogers and Kirk Hovell                   |\n')
 fprintf('|                                                                |\n')
-fprintf('|Current Version: 3.03 (Beta Release)                            |\n')
+fprintf('|Current Version: 3.04 (Beta Release)                            |\n')
 fprintf('|                                                                |\n')
-fprintf('|Last Edit: 2020-04-13                                           |\n')
+fprintf('|Last Edit: 2020-10-18                                           |\n')
 fprintf('|                                                                |\n')
 fprintf('|----------------------------------------------------------------|\n')
 fprintf('|----------------------------------------------------------------|\n')
@@ -191,8 +191,7 @@ home_states_BLUE          = [ xLength/2-0.9; yLength/2; 0];  % [m; m; rad]
                                               
 %% Start the graphical user interface:
 
-run('GUI_v3_03');
-
+run('GUI_v3_04')
 
 %% Start UDP receive interface
 

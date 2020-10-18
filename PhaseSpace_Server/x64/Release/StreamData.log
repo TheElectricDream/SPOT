@@ -28,8 +28,10 @@ C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(248,107): warning C
           [
               _Rep=__int64
           ]
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(55,10): warning C4101: 'platformID': unreferenced local variable
 C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(57,10): warning C4101: 'host_name': unreferenced local variable
 C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(59,13): warning C4101: 'start': unreferenced local variable
 C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(56,21): warning C4101: 'hp': unreferenced local variable
+C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\StreamData.cc(293): warning C4700: uninitialized local variable 'client_length' used
 LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
   StreamData.vcxproj -> C:\Users\AlexC\Desktop\SPOT3\PhaseSpace_Server\x64\Release\StreamData.exe
