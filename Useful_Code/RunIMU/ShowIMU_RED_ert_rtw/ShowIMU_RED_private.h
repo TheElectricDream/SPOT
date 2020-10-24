@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'ShowIMU_RED'.
 //
-// Model version                  : 1.28
+// Model version                  : 1.29
 // Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
-// C/C++ source code generated on : Fri Aug 14 16:54:35 2020
+// C/C++ source code generated on : Sat Oct 24 14:31:22 2020
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,11 +21,12 @@
 #ifndef RTW_HEADER_ShowIMU_RED_private_h_
 #define RTW_HEADER_ShowIMU_RED_private_h_
 #include "rtwtypes.h"
-#include "ShowIMU_RED.h"
+#include "multiword_types.h"
 
-extern void ShowIMU_RED_MATLABFunction(real_T rtu_w, real_T rtu_zeta, real_T
-  rtu_tau, real_T *rty_a, real_T *rty_b, real_T *rty_c);
-
+// Private macros used by the generated code to access rtModel
+#ifndef rtmSetTFinal
+# define rtmSetTFinal(rtm, val)        ((rtm)->Timing.tFinal = (val))
+#endif
 #endif                                 // RTW_HEADER_ShowIMU_RED_private_h_
 
 //

@@ -19,7 +19,7 @@ classdef PhaseSpace_ALL < matlab.System ...
     
     properties
         % Platform Selection
-        platformSelection = 3;
+        platformSelection = 1;
     end
     
     properties (Nontunable)
@@ -176,12 +176,12 @@ classdef PhaseSpace_ALL < matlab.System ...
                 addIncludeFiles(buildInfo,'phasespace_headers.h',includeDir);
                 
                 % Add the SOURCE files for the PhaseSpace camera 
-                addSourceFiles(buildInfo,'socket.cc',srcDir);
-                addSourceFiles(buildInfo,'owl_rpd.cc',srcDir);
-                addSourceFiles(buildInfo,'owl.cc',srcDir);
-                addSourceFiles(buildInfo,'libowl_socket.cc',srcDir);
-                addSourceFiles(buildInfo,'libowl.cc',srcDir);
-                addSourceFiles(buildInfo,'filters.cc',srcDir);
+                addSourceFiles(buildInfo,'socket.cpp',srcDir);
+                addSourceFiles(buildInfo,'owl_rpd.cpp',srcDir);
+                addSourceFiles(buildInfo,'owl.cpp',srcDir);
+                addSourceFiles(buildInfo,'libowl_socket.cpp',srcDir);
+                addSourceFiles(buildInfo,'libowl.cpp',srcDir);
+                addSourceFiles(buildInfo,'filters.cpp',srcDir);
                 addSourceFiles(buildInfo,'phasespace_functions.cpp',srcDir);
                 
                 %addLinkFlags(buildInfo,{'-lSource'});

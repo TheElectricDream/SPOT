@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'ShowIMU_RED'.
 //
-// Model version                  : 1.28
+// Model version                  : 1.29
 // Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
-// C/C++ source code generated on : Fri Aug 14 16:54:35 2020
+// C/C++ source code generated on : Sat Oct 24 14:31:22 2020
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -46,28 +46,6 @@ static void matlabCodegenHandle_matlabCod_d(i_codertarget_raspi_internal__T *obj
 static raspi_internal_lsm9ds1Block_S_T *ShowI_lsm9ds1Block_lsm9ds1Block
   (raspi_internal_lsm9ds1Block_S_T *obj);
 static void ShowIMU_RED_SystemCore_setup(raspi_internal_lsm9ds1Block_S_T *obj);
-
-//
-// Output and update for atomic system:
-//    '<S4>/MATLAB Function'
-//    '<S6>/MATLAB Function'
-//    '<S8>/MATLAB Function'
-//
-void ShowIMU_RED_MATLABFunction(real_T rtu_w, real_T rtu_zeta, real_T rtu_tau,
-  real_T *rty_a, real_T *rty_b, real_T *rty_c)
-{
-  real_T wt;
-  real_T p;
-  real_T d;
-  wt = rtu_tau * rtu_w;
-  p = 2.0 * rtu_zeta * wt;
-  wt *= wt;
-  d = (wt + 1.0) + p;
-  *rty_a = wt / d;
-  *rty_b = (1.0 - wt) / d;
-  *rty_c = ((wt + 1.0) - p) / d;
-}
-
 static void ShowIMU_RED_SystemCore_release(const raspi_internal_lsm9ds1Block_S_T
   *obj)
 {
@@ -306,22 +284,12 @@ static void ShowIMU_RED_SystemCore_setup(raspi_internal_lsm9ds1Block_S_T *obj)
 // Model step function
 void ShowIMU_RED_step(void)
 {
-  char_T *sErr;
-  int16_T b_RegisterValue[3];
+  int16_T b_output[3];
   uint8_T SwappedDataBytes;
   uint8_T status;
   uint8_T output_raw[6];
   int32_T i;
   real_T *b;
-
-  // MATLAB Function: '<S4>/MATLAB Function' incorporates:
-  //   Constant: '<Root>/Constant'
-  //   Constant: '<S4>/Constant'
-  //   Constant: '<S4>/Constant1'
-
-  ShowIMU_RED_MATLABFunction(ShowIMU_RED_P.Constant_Value,
-    ShowIMU_RED_P.Constant_Value_e, ShowIMU_RED_P.Constant1_Value,
-    &ShowIMU_RED_B.a_c, &ShowIMU_RED_B.b_d, &ShowIMU_RED_B.c_p);
 
   // MATLABSystem: '<Root>/LSM9DS1 IMU Sensor'
   status = 24U;
@@ -332,20 +300,8 @@ void ShowIMU_RED_step(void)
   if (0 == status) {
     MW_I2C_MasterRead(ShowIMU_RED_DW.obj.i2cobj_A_G.MW_I2C_HANDLE, 106U,
                       output_raw, 6U, false, true);
-    std::memcpy((void *)&b_RegisterValue[0], (void *)&output_raw[0], (uint32_T)
-                ((size_t)3 * sizeof(int16_T)));
-  } else {
-    b_RegisterValue[0] = 0;
-    b_RegisterValue[1] = 0;
-    b_RegisterValue[2] = 0;
-  }
-
-  b = &ShowIMU_RED_DW.obj.CalGyroA[0];
-  for (i = 0; i < 3; i++) {
-    ShowIMU_RED_B.LSM9DS1IMUSensor_o1[i] = ((b[3 * i + 1] * static_cast<real_T>
-      (b_RegisterValue[1]) + b[3 * i] * static_cast<real_T>(b_RegisterValue[0]))
-      + b[3 * i + 2] * static_cast<real_T>(b_RegisterValue[2])) +
-      ShowIMU_RED_DW.obj.CalGyroB[i];
+    std::memcpy((void *)&b_output[0], (void *)&output_raw[0], (uint32_T)((size_t)
+      3 * sizeof(int16_T)));
   }
 
   status = 40U;
@@ -356,20 +312,19 @@ void ShowIMU_RED_step(void)
   if (0 == status) {
     MW_I2C_MasterRead(ShowIMU_RED_DW.obj.i2cobj_A_G.MW_I2C_HANDLE, 106U,
                       output_raw, 6U, false, true);
-    std::memcpy((void *)&b_RegisterValue[0], (void *)&output_raw[0], (uint32_T)
-                ((size_t)3 * sizeof(int16_T)));
+    std::memcpy((void *)&b_output[0], (void *)&output_raw[0], (uint32_T)((size_t)
+      3 * sizeof(int16_T)));
   } else {
-    b_RegisterValue[0] = 0;
-    b_RegisterValue[1] = 0;
-    b_RegisterValue[2] = 0;
+    b_output[0] = 0;
+    b_output[1] = 0;
+    b_output[2] = 0;
   }
 
   b = &ShowIMU_RED_DW.obj.CalAccelA[0];
   for (i = 0; i < 3; i++) {
     ShowIMU_RED_B.LSM9DS1IMUSensor_o2[i] = ((b[3 * i + 1] * static_cast<real_T>
-      (b_RegisterValue[1]) + b[3 * i] * static_cast<real_T>(b_RegisterValue[0]))
-      + b[3 * i + 2] * static_cast<real_T>(b_RegisterValue[2])) +
-      ShowIMU_RED_DW.obj.CalAccelB[i];
+      (b_output[1]) + b[3 * i] * static_cast<real_T>(b_output[0])) + b[3 * i + 2]
+      * static_cast<real_T>(b_output[2])) + ShowIMU_RED_DW.obj.CalAccelB[i];
   }
 
   status = 40U;
@@ -380,421 +335,93 @@ void ShowIMU_RED_step(void)
   if (0 == status) {
     MW_I2C_MasterRead(ShowIMU_RED_DW.obj.i2cobj_MAG.MW_I2C_HANDLE, 28U,
                       output_raw, 6U, false, true);
-    std::memcpy((void *)&b_RegisterValue[0], (void *)&output_raw[0], (uint32_T)
-                ((size_t)3 * sizeof(int16_T)));
-  } else {
-    b_RegisterValue[0] = 0;
-    b_RegisterValue[1] = 0;
-    b_RegisterValue[2] = 0;
+    std::memcpy((void *)&b_output[0], (void *)&output_raw[0], (uint32_T)((size_t)
+      3 * sizeof(int16_T)));
   }
 
-  b = &ShowIMU_RED_DW.obj.CalMagA[0];
-  for (i = 0; i < 3; i++) {
-    ShowIMU_RED_B.a_m = ((b[3 * i + 1] * static_cast<real_T>(b_RegisterValue[1])
-                          + b[3 * i] * static_cast<real_T>(b_RegisterValue[0]))
-                         + b[3 * i + 2] * static_cast<real_T>(b_RegisterValue[2]))
-      + ShowIMU_RED_DW.obj.CalMagB[i];
-    ShowIMU_RED_B.b_n = ShowIMU_RED_B.LSM9DS1IMUSensor_o1[i] * 500.0 / 32768.0;
-    ShowIMU_RED_B.LSM9DS1IMUSensor_o3[i] = ShowIMU_RED_B.a_m * 4.0 / 32768.0;
-
-    // Sum: '<S4>/Sum' incorporates:
-    //   UnitDelay: '<S4>/Unit Delay1'
-
-    ShowIMU_RED_B.Sum[i] = ShowIMU_RED_B.b_n +
-      ShowIMU_RED_DW.UnitDelay1_DSTATE[i];
-    ShowIMU_RED_B.LSM9DS1IMUSensor_o1[i] = ShowIMU_RED_B.b_n;
-    ShowIMU_RED_B.LSM9DS1IMUSensor_o2[i] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[i] *
-      2.0 / 32768.0;
-  }
+  ShowIMU_RED_B.LSM9DS1IMUSensor_o2[0] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[0] *
+    2.0 / 32768.0;
+  ShowIMU_RED_B.LSM9DS1IMUSensor_o2[1] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[1] *
+    2.0 / 32768.0;
+  ShowIMU_RED_B.LSM9DS1IMUSensor_o2[2] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[2] *
+    2.0 / 32768.0;
 
   // End of MATLABSystem: '<Root>/LSM9DS1 IMU Sensor'
 
-  // MATLAB Function: '<S6>/MATLAB Function' incorporates:
-  //   Constant: '<Root>/Constant'
-  //   Constant: '<S6>/Constant'
-  //   Constant: '<S6>/Constant1'
+  // External mode
+  rtExtModeUploadCheckTrigger(1);
 
-  ShowIMU_RED_MATLABFunction(ShowIMU_RED_P.Constant_Value,
-    ShowIMU_RED_P.Constant_Value_i, ShowIMU_RED_P.Constant1_Value_b,
-    &ShowIMU_RED_B.a_m, &ShowIMU_RED_B.b_n, &ShowIMU_RED_B.c_h);
-
-  // Sum: '<S6>/Sum' incorporates:
-  //   UnitDelay: '<S6>/Unit Delay1'
-
-  ShowIMU_RED_B.rtb_Sum_d_idx_0 = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[0] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[0];
-  ShowIMU_RED_B.rtb_Sum_d_idx_1 = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[1] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[1];
-  ShowIMU_RED_B.rtb_Sum_d_idx_2 = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[2] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[2];
-
-  // MATLAB Function: '<S8>/MATLAB Function' incorporates:
-  //   Constant: '<Root>/Constant'
-  //   Constant: '<S8>/Constant'
-  //   Constant: '<S8>/Constant1'
-
-  ShowIMU_RED_MATLABFunction(ShowIMU_RED_P.Constant_Value,
-    ShowIMU_RED_P.Constant_Value_ec, ShowIMU_RED_P.Constant1_Value_f,
-    &ShowIMU_RED_B.a, &ShowIMU_RED_B.b, &ShowIMU_RED_B.c);
-
-  // Sum: '<S8>/Sum' incorporates:
-  //   UnitDelay: '<S8>/Unit Delay1'
-
-  ShowIMU_RED_B.rtb_Sum_dw_idx_0 = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[0] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[0];
-  ShowIMU_RED_B.rtb_Sum_dw_idx_1 = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[1] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[1];
-  ShowIMU_RED_B.rtb_Sum_dw_idx_2 = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[2] +
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[2];
-
-  // SignalConversion generated from: '<Root>/UDP Send' incorporates:
-  //   Product: '<S4>/Product1'
-  //   Product: '<S6>/Product1'
-  //   Product: '<S8>/Product1'
-
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[0] = ShowIMU_RED_B.Sum[0] *
-    ShowIMU_RED_B.a_c;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[1] = ShowIMU_RED_B.Sum[1] *
-    ShowIMU_RED_B.a_c;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[2] = ShowIMU_RED_B.Sum[2] *
-    ShowIMU_RED_B.a_c;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[3] =
-    ShowIMU_RED_B.rtb_Sum_d_idx_0 * ShowIMU_RED_B.a_m;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[4] =
-    ShowIMU_RED_B.rtb_Sum_d_idx_1 * ShowIMU_RED_B.a_m;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[5] =
-    ShowIMU_RED_B.rtb_Sum_d_idx_2 * ShowIMU_RED_B.a_m;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[6] =
-    ShowIMU_RED_B.rtb_Sum_dw_idx_0 * ShowIMU_RED_B.a;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[7] =
-    ShowIMU_RED_B.rtb_Sum_dw_idx_1 * ShowIMU_RED_B.a;
-  ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[8] =
-    ShowIMU_RED_B.rtb_Sum_dw_idx_2 * ShowIMU_RED_B.a;
-
-  // Sum: '<S8>/Sum1' incorporates:
-  //   Gain: '<S8>/Gain1'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay1'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_o[0] = (ShowIMU_RED_B.rtb_Sum_dw_idx_0 *
-    ShowIMU_RED_B.b + ShowIMU_RED_B.LSM9DS1IMUSensor_o3[0]) *
-    ShowIMU_RED_P.Gain1_Gain + ShowIMU_RED_DW.UnitDelay2_DSTATE[0];
-
-  // Sum: '<S8>/Sum3' incorporates:
-  //   Product: '<S8>/Product2'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE[0] = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[0] -
-    ShowIMU_RED_B.rtb_Sum_dw_idx_0 * ShowIMU_RED_B.c;
-
-  // Sum: '<S6>/Sum1' incorporates:
-  //   Gain: '<S6>/Gain1'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay1'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_h[0] = (ShowIMU_RED_B.rtb_Sum_d_idx_0 *
-    ShowIMU_RED_B.b_n + ShowIMU_RED_B.LSM9DS1IMUSensor_o2[0]) *
-    ShowIMU_RED_P.Gain1_Gain_a + ShowIMU_RED_DW.UnitDelay2_DSTATE_e[0];
-
-  // Sum: '<S6>/Sum3' incorporates:
-  //   Product: '<S6>/Product2'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_e[0] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[0] -
-    ShowIMU_RED_B.rtb_Sum_d_idx_0 * ShowIMU_RED_B.c_h;
-
-  // Sum: '<S4>/Sum1' incorporates:
-  //   Gain: '<S4>/Gain1'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay1'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE[0] = (ShowIMU_RED_B.Sum[0] *
-    ShowIMU_RED_B.b_d + ShowIMU_RED_B.LSM9DS1IMUSensor_o1[0]) *
-    ShowIMU_RED_P.Gain1_Gain_b + ShowIMU_RED_DW.UnitDelay2_DSTATE_l[0];
-
-  // Sum: '<S4>/Sum3' incorporates:
-  //   Product: '<S4>/Product2'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_l[0] = ShowIMU_RED_B.LSM9DS1IMUSensor_o1[0] -
-    ShowIMU_RED_B.Sum[0] * ShowIMU_RED_B.c_p;
-
-  // Sum: '<S8>/Sum1' incorporates:
-  //   Gain: '<S8>/Gain1'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay1'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_o[1] = (ShowIMU_RED_B.rtb_Sum_dw_idx_1 *
-    ShowIMU_RED_B.b + ShowIMU_RED_B.LSM9DS1IMUSensor_o3[1]) *
-    ShowIMU_RED_P.Gain1_Gain + ShowIMU_RED_DW.UnitDelay2_DSTATE[1];
-
-  // Sum: '<S8>/Sum3' incorporates:
-  //   Product: '<S8>/Product2'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE[1] = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[1] -
-    ShowIMU_RED_B.rtb_Sum_dw_idx_1 * ShowIMU_RED_B.c;
-
-  // Sum: '<S6>/Sum1' incorporates:
-  //   Gain: '<S6>/Gain1'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay1'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_h[1] = (ShowIMU_RED_B.rtb_Sum_d_idx_1 *
-    ShowIMU_RED_B.b_n + ShowIMU_RED_B.LSM9DS1IMUSensor_o2[1]) *
-    ShowIMU_RED_P.Gain1_Gain_a + ShowIMU_RED_DW.UnitDelay2_DSTATE_e[1];
-
-  // Sum: '<S6>/Sum3' incorporates:
-  //   Product: '<S6>/Product2'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_e[1] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[1] -
-    ShowIMU_RED_B.rtb_Sum_d_idx_1 * ShowIMU_RED_B.c_h;
-
-  // Sum: '<S4>/Sum1' incorporates:
-  //   Gain: '<S4>/Gain1'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay1'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE[1] = (ShowIMU_RED_B.Sum[1] *
-    ShowIMU_RED_B.b_d + ShowIMU_RED_B.LSM9DS1IMUSensor_o1[1]) *
-    ShowIMU_RED_P.Gain1_Gain_b + ShowIMU_RED_DW.UnitDelay2_DSTATE_l[1];
-
-  // Sum: '<S4>/Sum3' incorporates:
-  //   Product: '<S4>/Product2'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_l[1] = ShowIMU_RED_B.LSM9DS1IMUSensor_o1[1] -
-    ShowIMU_RED_B.Sum[1] * ShowIMU_RED_B.c_p;
-
-  // Sum: '<S8>/Sum1' incorporates:
-  //   Gain: '<S8>/Gain1'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay1'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_o[2] = (ShowIMU_RED_B.rtb_Sum_dw_idx_2 *
-    ShowIMU_RED_B.b + ShowIMU_RED_B.LSM9DS1IMUSensor_o3[2]) *
-    ShowIMU_RED_P.Gain1_Gain + ShowIMU_RED_DW.UnitDelay2_DSTATE[2];
-
-  // Sum: '<S8>/Sum3' incorporates:
-  //   Product: '<S8>/Product2'
-  //   Product: '<S8>/Product5'
-  //   Sum: '<S8>/Sum2'
-  //   UnitDelay: '<S8>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE[2] = ShowIMU_RED_B.LSM9DS1IMUSensor_o3[2] -
-    ShowIMU_RED_B.rtb_Sum_dw_idx_2 * ShowIMU_RED_B.c;
-
-  // Sum: '<S6>/Sum1' incorporates:
-  //   Gain: '<S6>/Gain1'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay1'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE_h[2] = (ShowIMU_RED_B.rtb_Sum_d_idx_2 *
-    ShowIMU_RED_B.b_n + ShowIMU_RED_B.LSM9DS1IMUSensor_o2[2]) *
-    ShowIMU_RED_P.Gain1_Gain_a + ShowIMU_RED_DW.UnitDelay2_DSTATE_e[2];
-
-  // Sum: '<S6>/Sum3' incorporates:
-  //   Product: '<S6>/Product2'
-  //   Product: '<S6>/Product5'
-  //   Sum: '<S6>/Sum2'
-  //   UnitDelay: '<S6>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_e[2] = ShowIMU_RED_B.LSM9DS1IMUSensor_o2[2] -
-    ShowIMU_RED_B.rtb_Sum_d_idx_2 * ShowIMU_RED_B.c_h;
-
-  // Sum: '<S4>/Sum1' incorporates:
-  //   Gain: '<S4>/Gain1'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay1'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay1_DSTATE[2] = (ShowIMU_RED_B.Sum[2] *
-    ShowIMU_RED_B.b_d + ShowIMU_RED_B.LSM9DS1IMUSensor_o1[2]) *
-    ShowIMU_RED_P.Gain1_Gain_b + ShowIMU_RED_DW.UnitDelay2_DSTATE_l[2];
-
-  // Sum: '<S4>/Sum3' incorporates:
-  //   Product: '<S4>/Product2'
-  //   Product: '<S4>/Product5'
-  //   Sum: '<S4>/Sum2'
-  //   UnitDelay: '<S4>/Unit Delay2'
-
-  ShowIMU_RED_DW.UnitDelay2_DSTATE_l[2] = ShowIMU_RED_B.LSM9DS1IMUSensor_o1[2] -
-    ShowIMU_RED_B.Sum[2] * ShowIMU_RED_B.c_p;
-
-  // Update for S-Function (sdspToNetwork): '<Root>/UDP Send'
-  sErr = GetErrorBuffer(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-  LibUpdate_Network(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U],
-                    &ShowIMU_RED_B.TmpSignalConversionAtUDPSendInp[0U], 9);
-  if (*sErr != 0) {
-    rtmSetErrorStatus(ShowIMU_RED_M, sErr);
-    rtmSetStopRequested(ShowIMU_RED_M, 1);
+  {                                    // Sample time: [0.01s, 0.0s]
+    rtExtModeUpload(0, (real_T)ShowIMU_RED_M->Timing.taskTime0);
   }
 
-  // End of Update for S-Function (sdspToNetwork): '<Root>/UDP Send'
+  // signal main to stop simulation
+  {                                    // Sample time: [0.01s, 0.0s]
+    if ((rtmGetTFinal(ShowIMU_RED_M)!=-1) &&
+        !((rtmGetTFinal(ShowIMU_RED_M)-ShowIMU_RED_M->Timing.taskTime0) >
+          ShowIMU_RED_M->Timing.taskTime0 * (DBL_EPSILON))) {
+      rtmSetErrorStatus(ShowIMU_RED_M, "Simulation finished");
+    }
+
+    if (rtmGetStopRequested(ShowIMU_RED_M)) {
+      rtmSetErrorStatus(ShowIMU_RED_M, "Simulation finished");
+    }
+  }
+
+  // Update absolute time for base rate
+  // The "clockTick0" counts the number of times the code of this task has
+  //  been executed. The absolute time is the multiplication of "clockTick0"
+  //  and "Timing.stepSize0". Size of "clockTick0" ensures timer will not
+  //  overflow during the application lifespan selected.
+
+  ShowIMU_RED_M->Timing.taskTime0 =
+    ((time_T)(++ShowIMU_RED_M->Timing.clockTick0)) *
+    ShowIMU_RED_M->Timing.stepSize0;
 }
 
 // Model initialize function
 void ShowIMU_RED_initialize(void)
 {
+  // Registration code
+  rtmSetTFinal(ShowIMU_RED_M, -1);
+  ShowIMU_RED_M->Timing.stepSize0 = 0.01;
+
+  // External mode info
+  ShowIMU_RED_M->Sizes.checksums[0] = (2733879044U);
+  ShowIMU_RED_M->Sizes.checksums[1] = (2923222384U);
+  ShowIMU_RED_M->Sizes.checksums[2] = (438845815U);
+  ShowIMU_RED_M->Sizes.checksums[3] = (1588857731U);
+
   {
-    char_T *sErr;
-
-    // Start for S-Function (sdspToNetwork): '<Root>/UDP Send'
-    sErr = GetErrorBuffer(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-    CreateUDPInterface(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-    if (*sErr == 0) {
-      LibCreate_Network(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U], 1, "0.0.0.0", -1,
-                        "255.255.255.255", ShowIMU_RED_P.UDPSend_Port, 8192, 8,
-                        0);
-    }
-
-    if (*sErr == 0) {
-      LibStart(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-    }
-
-    if (*sErr != 0) {
-      DestroyUDPInterface(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-      if (*sErr != 0) {
-        rtmSetErrorStatus(ShowIMU_RED_M, sErr);
-        rtmSetStopRequested(ShowIMU_RED_M, 1);
-      }
-    }
-
-    // End of Start for S-Function (sdspToNetwork): '<Root>/UDP Send'
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE[0] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[0] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_g;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[0] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_m;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE[0] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_e[0] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_c;
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_l[0] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_m;
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE[1] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[1] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_g;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[1] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_m;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE[1] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_e[1] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_c;
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_l[1] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_m;
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE[2] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_h[2] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_g;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay1'
-    ShowIMU_RED_DW.UnitDelay1_DSTATE_o[2] =
-      ShowIMU_RED_P.UnitDelay1_InitialCondition_m;
-
-    // InitializeConditions for UnitDelay: '<S8>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE[2] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition;
-
-    // InitializeConditions for UnitDelay: '<S6>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_e[2] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_c;
-
-    // InitializeConditions for UnitDelay: '<S4>/Unit Delay2'
-    ShowIMU_RED_DW.UnitDelay2_DSTATE_l[2] =
-      ShowIMU_RED_P.UnitDelay2_InitialCondition_m;
-
-    // Start for MATLABSystem: '<Root>/LSM9DS1 IMU Sensor'
-    ShowIMU_RED_DW.obj.i2cobj_A_G.matlabCodegenIsDeleted = true;
-    ShowIMU_RED_DW.obj.i2cobj_MAG.matlabCodegenIsDeleted = true;
-    ShowIMU_RED_DW.obj.matlabCodegenIsDeleted = true;
-    ShowI_lsm9ds1Block_lsm9ds1Block(&ShowIMU_RED_DW.obj);
-    ShowIMU_RED_SystemCore_setup(&ShowIMU_RED_DW.obj);
+    static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
+    static RTWExtModeInfo rt_ExtModeInfo;
+    static const sysRanDType *systemRan[2];
+    ShowIMU_RED_M->extModeInfo = (&rt_ExtModeInfo);
+    rteiSetSubSystemActiveVectorAddresses(&rt_ExtModeInfo, systemRan);
+    systemRan[0] = &rtAlwaysEnabled;
+    systemRan[1] = &rtAlwaysEnabled;
+    rteiSetModelMappingInfoPtr(ShowIMU_RED_M->extModeInfo,
+      &ShowIMU_RED_M->SpecialInfo.mappingInfo);
+    rteiSetChecksumsPtr(ShowIMU_RED_M->extModeInfo,
+                        ShowIMU_RED_M->Sizes.checksums);
+    rteiSetTPtr(ShowIMU_RED_M->extModeInfo, rtmGetTPtr(ShowIMU_RED_M));
   }
+
+  // Start for MATLABSystem: '<Root>/LSM9DS1 IMU Sensor'
+  ShowIMU_RED_DW.obj.i2cobj_A_G.matlabCodegenIsDeleted = true;
+  ShowIMU_RED_DW.obj.i2cobj_MAG.matlabCodegenIsDeleted = true;
+  ShowIMU_RED_DW.obj.matlabCodegenIsDeleted = true;
+  ShowI_lsm9ds1Block_lsm9ds1Block(&ShowIMU_RED_DW.obj);
+  ShowIMU_RED_SystemCore_setup(&ShowIMU_RED_DW.obj);
 }
 
 // Model terminate function
 void ShowIMU_RED_terminate(void)
 {
-  char_T *sErr;
-
   // Terminate for MATLABSystem: '<Root>/LSM9DS1 IMU Sensor'
   matlabCodegenHandle_matlabCodeg(&ShowIMU_RED_DW.obj);
   matlabCodegenHandle_matlabCo_dj(&ShowIMU_RED_DW.obj.i2cobj_MAG);
   matlabCodegenHandle_matlabCod_d(&ShowIMU_RED_DW.obj.i2cobj_A_G);
-
-  // Terminate for S-Function (sdspToNetwork): '<Root>/UDP Send'
-  sErr = GetErrorBuffer(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-  LibTerminate(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-  if (*sErr != 0) {
-    rtmSetErrorStatus(ShowIMU_RED_M, sErr);
-    rtmSetStopRequested(ShowIMU_RED_M, 1);
-  }
-
-  LibDestroy(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U], 1);
-  DestroyUDPInterface(&ShowIMU_RED_DW.UDPSend_NetworkLib[0U]);
-
-  // End of Terminate for S-Function (sdspToNetwork): '<Root>/UDP Send'
 }
 
 //

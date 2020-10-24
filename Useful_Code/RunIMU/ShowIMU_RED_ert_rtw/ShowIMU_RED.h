@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'ShowIMU_RED'.
 //
-// Model version                  : 1.28
+// Model version                  : 1.29
 // Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
-// C/C++ source code generated on : Fri Aug 14 16:54:35 2020
+// C/C++ source code generated on : Sat Oct 24 14:31:22 2020
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,13 +21,27 @@
 #ifndef RTW_HEADER_ShowIMU_RED_h_
 #define RTW_HEADER_ShowIMU_RED_h_
 #include <cstring>
+#include <cfloat>
 #include <stddef.h>
 #include "rtwtypes.h"
+#include "rtw_extmode.h"
+#include "sysran_types.h"
+#include "ext_work.h"
 #include "MW_I2C.h"
-#include "DAHostLib_Network.h"
 #include "ShowIMU_RED_types.h"
 
+// Shared type includes
+#include "multiword_types.h"
+
 // Macros for accessing real-time model data structure
+#ifndef rtmGetFinalTime
+# define rtmGetFinalTime(rtm)          ((rtm)->Timing.tFinal)
+#endif
+
+#ifndef rtmGetRTWExtModeInfo
+# define rtmGetRTWExtModeInfo(rtm)     ((rtm)->extModeInfo)
+#endif
+
 #ifndef rtmGetErrorStatus
 # define rtmGetErrorStatus(rtm)        ((rtm)->errorStatus)
 #endif
@@ -48,100 +62,59 @@
 # define rtmGetStopRequestedPtr(rtm)   (&((rtm)->Timing.stopRequestedFlag))
 #endif
 
+#ifndef rtmGetT
+# define rtmGetT(rtm)                  ((rtm)->Timing.taskTime0)
+#endif
+
+#ifndef rtmGetTFinal
+# define rtmGetTFinal(rtm)             ((rtm)->Timing.tFinal)
+#endif
+
+#ifndef rtmGetTPtr
+# define rtmGetTPtr(rtm)               (&(rtm)->Timing.taskTime0)
+#endif
+
 // Block signals (default storage)
 typedef struct {
-  real_T TmpSignalConversionAtUDPSendInp[9];
-  real_T LSM9DS1IMUSensor_o1[3];       // '<Root>/LSM9DS1 IMU Sensor'
-  real_T Sum[3];                       // '<S4>/Sum'
   real_T LSM9DS1IMUSensor_o2[3];       // '<Root>/LSM9DS1 IMU Sensor'
-  real_T LSM9DS1IMUSensor_o3[3];       // '<Root>/LSM9DS1 IMU Sensor'
-  real_T c;                            // '<S8>/MATLAB Function'
-  real_T b;                            // '<S8>/MATLAB Function'
-  real_T a;                            // '<S8>/MATLAB Function'
-  real_T c_h;                          // '<S6>/MATLAB Function'
-  real_T b_n;                          // '<S6>/MATLAB Function'
-  real_T a_m;                          // '<S6>/MATLAB Function'
-  real_T c_p;                          // '<S4>/MATLAB Function'
-  real_T b_d;                          // '<S4>/MATLAB Function'
-  real_T a_c;                          // '<S4>/MATLAB Function'
-  real_T rtb_Sum_d_idx_0;
-  real_T rtb_Sum_d_idx_1;
-  real_T rtb_Sum_d_idx_2;
-  real_T rtb_Sum_dw_idx_0;
-  real_T rtb_Sum_dw_idx_1;
-  real_T rtb_Sum_dw_idx_2;
 } B_ShowIMU_RED_T;
 
 // Block states (default storage) for system '<Root>'
 typedef struct {
   raspi_internal_lsm9ds1Block_S_T obj; // '<Root>/LSM9DS1 IMU Sensor'
-  real_T UnitDelay1_DSTATE[3];         // '<S4>/Unit Delay1'
-  real_T UnitDelay1_DSTATE_h[3];       // '<S6>/Unit Delay1'
-  real_T UnitDelay1_DSTATE_o[3];       // '<S8>/Unit Delay1'
-  real_T UnitDelay2_DSTATE[3];         // '<S8>/Unit Delay2'
-  real_T UnitDelay2_DSTATE_e[3];       // '<S6>/Unit Delay2'
-  real_T UnitDelay2_DSTATE_l[3];       // '<S4>/Unit Delay2'
-  real_T UDPSend_NetworkLib[137];      // '<Root>/UDP Send'
+  struct {
+    void *LoggedData;
+  } Scope_PWORK;                       // '<Root>/Scope'
+
+  struct {
+    void *AQHandles;
+    void *SlioLTF;
+  } TAQSigLogging_InsertedFor_LSM9D;   // synthesized block
 } DW_ShowIMU_RED_T;
-
-// Parameters (default storage)
-struct P_ShowIMU_RED_T_ {
-  real_T Constant_Value;               // Expression: 4
-                                          //  Referenced by: '<Root>/Constant'
-
-  real_T Constant_Value_e;             // Expression: zeta
-                                          //  Referenced by: '<S4>/Constant'
-
-  real_T Constant1_Value;              // Expression: tau
-                                          //  Referenced by: '<S4>/Constant1'
-
-  real_T UnitDelay1_InitialCondition;  // Expression: 0
-                                          //  Referenced by: '<S4>/Unit Delay1'
-
-  real_T Constant_Value_i;             // Expression: zeta
-                                          //  Referenced by: '<S6>/Constant'
-
-  real_T Constant1_Value_b;            // Expression: tau
-                                          //  Referenced by: '<S6>/Constant1'
-
-  real_T UnitDelay1_InitialCondition_g;// Expression: 0
-                                          //  Referenced by: '<S6>/Unit Delay1'
-
-  real_T Constant_Value_ec;            // Expression: zeta
-                                          //  Referenced by: '<S8>/Constant'
-
-  real_T Constant1_Value_f;            // Expression: tau
-                                          //  Referenced by: '<S8>/Constant1'
-
-  real_T UnitDelay1_InitialCondition_m;// Expression: 0
-                                          //  Referenced by: '<S8>/Unit Delay1'
-
-  real_T Gain1_Gain;                   // Expression: 2
-                                          //  Referenced by: '<S8>/Gain1'
-
-  real_T UnitDelay2_InitialCondition;  // Expression: 0
-                                          //  Referenced by: '<S8>/Unit Delay2'
-
-  real_T Gain1_Gain_a;                 // Expression: 2
-                                          //  Referenced by: '<S6>/Gain1'
-
-  real_T UnitDelay2_InitialCondition_c;// Expression: 0
-                                          //  Referenced by: '<S6>/Unit Delay2'
-
-  real_T Gain1_Gain_b;                 // Expression: 2
-                                          //  Referenced by: '<S4>/Gain1'
-
-  real_T UnitDelay2_InitialCondition_m;// Expression: 0
-                                          //  Referenced by: '<S4>/Unit Delay2'
-
-  int32_T UDPSend_Port;                // Computed Parameter: UDPSend_Port
-                                          //  Referenced by: '<Root>/UDP Send'
-
-};
 
 // Real-time Model Data Structure
 struct tag_RTM_ShowIMU_RED_T {
   const char_T *errorStatus;
+  RTWExtModeInfo *extModeInfo;
+
+  //
+  //  Sizes:
+  //  The following substructure contains sizes information
+  //  for many of the model attributes such as inputs, outputs,
+  //  dwork, sample times, etc.
+
+  struct {
+    uint32_T checksums[4];
+  } Sizes;
+
+  //
+  //  SpecialInfo:
+  //  The following substructure contains special information
+  //  related to other components that are dependent on RTW.
+
+  struct {
+    const void *mappingInfo;
+  } SpecialInfo;
 
   //
   //  Timing:
@@ -149,23 +122,13 @@ struct tag_RTM_ShowIMU_RED_T {
   //  the timing information for the model.
 
   struct {
+    time_T taskTime0;
+    uint32_T clockTick0;
+    time_T stepSize0;
+    time_T tFinal;
     boolean_T stopRequestedFlag;
   } Timing;
 };
-
-// Block parameters (default storage)
-#ifdef __cplusplus
-
-extern "C" {
-
-#endif
-
-  extern P_ShowIMU_RED_T ShowIMU_RED_P;
-
-#ifdef __cplusplus
-
-}
-#endif
 
 // Block signals (default storage)
 #ifdef __cplusplus
@@ -229,15 +192,6 @@ extern "C" {
 //  Here is the system hierarchy for this model
 //
 //  '<Root>' : 'ShowIMU_RED'
-//  '<S1>'   : 'ShowIMU_RED/Discrete Varying Lowpass'
-//  '<S2>'   : 'ShowIMU_RED/Discrete Varying Lowpass1'
-//  '<S3>'   : 'ShowIMU_RED/Discrete Varying Lowpass2'
-//  '<S4>'   : 'ShowIMU_RED/Discrete Varying Lowpass/SOS1'
-//  '<S5>'   : 'ShowIMU_RED/Discrete Varying Lowpass/SOS1/MATLAB Function'
-//  '<S6>'   : 'ShowIMU_RED/Discrete Varying Lowpass1/SOS1'
-//  '<S7>'   : 'ShowIMU_RED/Discrete Varying Lowpass1/SOS1/MATLAB Function'
-//  '<S8>'   : 'ShowIMU_RED/Discrete Varying Lowpass2/SOS1'
-//  '<S9>'   : 'ShowIMU_RED/Discrete Varying Lowpass2/SOS1/MATLAB Function'
 
 #endif                                 // RTW_HEADER_ShowIMU_RED_h_
 

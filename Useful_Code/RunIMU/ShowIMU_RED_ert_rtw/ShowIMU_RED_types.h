@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'ShowIMU_RED'.
 //
-// Model version                  : 1.28
+// Model version                  : 1.29
 // Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
-// C/C++ source code generated on : Fri Aug 14 16:54:35 2020
+// C/C++ source code generated on : Sat Oct 24 14:31:22 2020
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -21,6 +21,7 @@
 #ifndef RTW_HEADER_ShowIMU_RED_types_h_
 #define RTW_HEADER_ShowIMU_RED_types_h_
 #include "rtwtypes.h"
+#include "multiword_types.h"
 
 // Model Code Variants
 
@@ -112,9 +113,6 @@ struct tag_Mu1SNMC7dAyyNmAihLbeZF
 typedef struct tag_Mu1SNMC7dAyyNmAihLbeZF raspi_internal_lsm9ds1Block_S_T;
 
 #endif                                 //typedef_raspi_internal_lsm9ds1Block_S_T
-
-// Parameters (default storage)
-typedef struct P_ShowIMU_RED_T_ P_ShowIMU_RED_T;
 
 // Forward declaration for rtModel
 typedef struct tag_RTM_ShowIMU_RED_T RT_MODEL_ShowIMU_RED_T;

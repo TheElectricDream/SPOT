@@ -105,7 +105,7 @@ serverRate                     = 0.1;       % 10 Hz
 Phase0_Duration                = 10;        % [s]
 Phase1_Duration                = 5;         % [s]
 Phase2_Duration                = 20;        % [s]
-Phase3_Duration                = 131;       % [s]
+Phase3_Duration                = 26;       % [s]
 Phase4_Duration                = 20;        % [s]
 Phase5_Duration                = 5;         % [s]
 
@@ -117,7 +117,7 @@ Phase5_Duration                = 5;         % [s]
 Phase3_SubPhase1_Duration      = 5;        % [s]
 Phase3_SubPhase2_Duration      = 5;        % [s]
 Phase3_SubPhase3_Duration      = 1;        % [s]
-Phase3_SubPhase4_Duration      = 120;      % [s]
+Phase3_SubPhase4_Duration      = 10;        % [s]
 
 % Determine the total experiment time from the durations:
 
@@ -178,15 +178,15 @@ thruster_dist2CG_BLUE         = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-5
 %%  Set the drop, initial, and home positions for each platform:
       
 drop_states_RED           = [ 2.114; 1.46; 0];          % [m; m; rad]
-drop_states_BLACK         = [ 1.19; 1.45; -0.06737];         % [m; m; rad]
+drop_states_BLACK         = [ xLength/2+0.9; yLength/2-0.5; 0];         % [m; m; rad]
 drop_states_BLUE          = [ 0.52; 1.45; -0.06737];         % [m; m; rad]
 
 init_states_RED           = [ xLength/2+0.7; yLength/2; 0]; % [m; m; rad]
-init_states_BLACK         = [ xLength/2; yLength/2; 0];      % [m; m; rad]
+init_states_BLACK         = [ xLength/2+0.9; yLength/2-0.5; 0];      % [m; m; rad]
 init_states_BLUE          = [ xLength/2-0.7; yLength/2; 0];      % [m; m; rad]
 
 home_states_RED           = [ xLength/2+0.9; yLength/2; 0]; % [m; m; rad]
-home_states_BLACK         = [ xLength/2; yLength/2; 0];  % [m; m; rad]
+home_states_BLACK         = [ xLength/2-0.9; yLength/2-0.5; 0];  % [m; m; rad]
 home_states_BLUE          = [ xLength/2-0.9; yLength/2; 0];  % [m; m; rad]
                                               
 %% Start the graphical user interface:

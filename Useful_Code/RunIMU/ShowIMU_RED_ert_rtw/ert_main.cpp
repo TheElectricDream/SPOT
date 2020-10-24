@@ -7,9 +7,9 @@
 //
 // Code generated for Simulink model 'ShowIMU_RED'.
 //
-// Model version                  : 1.28
+// Model version                  : 1.29
 // Simulink Coder version         : 9.3 (R2020a) 18-Nov-2019
-// C/C++ source code generated on : Fri Aug 14 16:54:35 2020
+// C/C++ source code generated on : Sat Oct 24 14:31:22 2020
 //
 // Target selection: ert.tlc
 // Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -48,11 +48,37 @@ void *baseRateTask(void *arg)
     !rtmGetStopRequested(ShowIMU_RED_M);
   while (runModel) {
     sem_wait(&baserateTaskSem);
+
+    // External mode
+    {
+      boolean_T rtmStopReq = false;
+      rtExtModePauseIfNeeded(ShowIMU_RED_M->extModeInfo, 1, &rtmStopReq);
+      if (rtmStopReq) {
+        rtmSetStopRequested(ShowIMU_RED_M, true);
+      }
+
+      if (rtmGetStopRequested(ShowIMU_RED_M) == true) {
+        rtmSetErrorStatus(ShowIMU_RED_M, "Simulation finished");
+        break;
+      }
+    }
+
+    // External mode
+    {
+      boolean_T rtmStopReq = false;
+      rtExtModeOneStep(ShowIMU_RED_M->extModeInfo, 1, &rtmStopReq);
+      if (rtmStopReq) {
+        rtmSetStopRequested(ShowIMU_RED_M, true);
+      }
+    }
+
     ShowIMU_RED_step();
 
     // Get model outputs here
+    rtExtModeCheckEndTrigger();
     stopRequested = !((rtmGetErrorStatus(ShowIMU_RED_M) == (NULL)) &&
                       !rtmGetStopRequested(ShowIMU_RED_M));
+    runModel = !stopRequested;
   }
 
   runModel = 0;
@@ -84,6 +110,7 @@ void *terminateTask(void *arg)
 
   // Terminate model
   ShowIMU_RED_terminate();
+  rtExtModeShutdown(1);
   sem_post(&stopSem);
   return NULL;
 }
@@ -95,9 +122,24 @@ int main(int argc, char **argv)
   mwRaspiInit();
   MW_launchPyserver();
   rtmSetErrorStatus(ShowIMU_RED_M, 0);
+  rtExtModeParseArgs(argc, (const char_T **)argv, NULL);
 
   // Initialize model
   ShowIMU_RED_initialize();
+
+  // External mode
+  rtSetTFinalForExtMode(&rtmGetTFinal(ShowIMU_RED_M));
+  rtExtModeCheckInit(1);
+
+  {
+    boolean_T rtmStopReq = false;
+    rtExtModeWaitForStartPkt(ShowIMU_RED_M->extModeInfo, 1, &rtmStopReq);
+    if (rtmStopReq) {
+      rtmSetStopRequested(ShowIMU_RED_M, true);
+    }
+  }
+
+  rtERTExtModeStartMsg();
 
   // Call RTOS Initialization function
   myRTOSInit(0.01, 0);

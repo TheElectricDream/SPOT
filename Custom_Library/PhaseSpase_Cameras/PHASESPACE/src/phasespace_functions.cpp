@@ -118,7 +118,7 @@ double initialize_phasespace(double platformSelection)
     /* Start streaming phasespace data. Sending (1) streams data using TCP/IP,
        sending (2) streams data using UDP, and sending (3) streams data using
        UDP but broadcasts to all IP addresses. */
-    owl.streaming(1);
+    owl.streaming(2);
    
 }
 
