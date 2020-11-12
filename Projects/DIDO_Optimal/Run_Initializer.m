@@ -105,9 +105,9 @@ serverRate                     = 0.1;       % 10 Hz
 Phase0_Duration                = 10;        % [s]
 Phase1_Duration                = 5;         % [s]
 Phase2_Duration                = 20;        % [s]
-Phase3_Duration                = 131;        % [s]
+Phase3_Duration                = 157;        % [s]
 Phase4_Duration                = 20;        % [s]
-Phase5_Duration                = 20;         % [s]
+Phase5_Duration                = 5;         % [s]
 
 % Set the duration of the sub-phases. Sub-phases occur during the
 % experiment phase (Phase3_Duration) and must be manually inserted into the
@@ -115,9 +115,9 @@ Phase5_Duration                = 20;         % [s]
 % the Phase3_Duration.
 
 Phase3_SubPhase1_Duration      = 5;        % [s]
-Phase3_SubPhase2_Duration      = 5;        % [s]
-Phase3_SubPhase3_Duration      = 1;        % [s]
-Phase3_SubPhase4_Duration      = 120;        % [s]
+Phase3_SubPhase2_Duration      = 2;        % [s]
+Phase3_SubPhase3_Duration      = 30;        % [s]
+Phase3_SubPhase4_Duration      = 120;       % [s]
 
 % Determine the total experiment time from the durations:
 
@@ -175,18 +175,24 @@ thruster_dist2CG_RED          = [49.92;-78.08;70.46;-63.54;81.08;-50.42;57.44;-7
 thruster_dist2CG_BLACK        = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-55.94];
 thruster_dist2CG_BLUE         = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-55.94];
 
+load('100NodeSolution_FreeFloating_DIDO.mat');
+
+Pos_J1  = [primal.time'+42,primal.states(4,:)'];
+Pos_J2  = [primal.time'+42,primal.states(5,:)'];
+Pos_J3  = [primal.time'+42,primal.states(6,:)'];
+
 %%  Set the drop, initial, and home positions for each platform:
 
 
-drop_states_RED           = [2.18401342773438,1.21458435058594,-3.12528014183044]; % [m; m; rad]
+drop_states_RED           = [ xLength/2+1.1; yLength/2; pi/2]; % [m; m; rad]
 drop_states_BLACK         = [1.36947387695313,1.22175756835938,-0.0161599479615688];  % [m; m; rad]
 drop_states_BLUE          = [ xLength/2+0.9; yLength/2+0.5; 0];         % [m; m; rad]
 
-init_states_RED           = [ xLength/2+0.7; yLength/2; pi]; % [m; m; rad]
+init_states_RED           = [ xLength/2+1.1; yLength/2; pi/2]; % [m; m; rad]
 init_states_BLACK         = [ xLength/2; yLength/2; 0];      % [m; m; rad]
 init_states_BLUE          = [ xLength/2+0.9; yLength/2+0.5; 0];      % [m; m; rad]
 
-home_states_RED           = [ xLength/2+0.7; yLength/2; pi]; % [m; m; rad]
+home_states_RED           = [ xLength/2+1.1; yLength/2; pi/2]; % [m; m; rad]
 home_states_BLACK         = [ xLength/2; yLength/2; 0];  % [m; m; rad]
 home_states_BLUE          = [ xLength/2-0.9; yLength/2+0.5; 0];  % [m; m; rad]
                                               

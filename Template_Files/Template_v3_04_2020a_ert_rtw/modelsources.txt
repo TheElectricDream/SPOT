@@ -1,2 +1,0 @@
-  Template_v3_04_2020a.cpp
-

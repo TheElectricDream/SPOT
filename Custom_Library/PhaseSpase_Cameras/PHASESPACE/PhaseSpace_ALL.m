@@ -60,7 +60,13 @@ classdef PhaseSpace_ALL < matlab.System ...
             y5 = double(0);
             y6 = double(0);
             y7 = double(0);
-            y   = zeros(1,7,'double');
+            y8 = double(0);
+            y9 = double(0);
+            y10 = double(0);
+            y11 = double(0);
+            y12 = double(0);
+            y13 = double(0);
+            y   = zeros(1,13,'double');
 
             if isempty(coder.target)
                 % Place simulation output code here
@@ -69,8 +75,10 @@ classdef PhaseSpace_ALL < matlab.System ...
                 coder.ceval('stream_phasespace',coder.ref(y1),...
                              coder.ref(y2),coder.ref(y3),coder.ref(y4),...
                              coder.ref(y5),coder.ref(y6),coder.ref(y7),...
+                             coder.ref(y8),coder.ref(y9),coder.ref(y10),...
+                             coder.ref(y11),coder.ref(y12),coder.ref(y13),...
                              obj.platformSelection);
-                y  =[y7/10, y1/1000, y2/1000, y3, y4/1000, y5/1000, y6];
+                y  =[y7/10, y1/1000, y2/1000, y3, y4/1000, y5/1000, y6, y8/1000, y9/1000, y10/1000, y11/1000, y12/1000, y13/1000];
 
             end
         end
@@ -112,7 +120,7 @@ classdef PhaseSpace_ALL < matlab.System ...
         end
         
         function varargout = getOutputSizeImpl(~)
-            varargout{1} = [1,7];
+            varargout{1} = [1,13];
         end
         
         function varargout = getOutputDataTypeImpl(~)
