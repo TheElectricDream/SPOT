@@ -9,3 +9,5 @@ This testbed is used by researchers to investigate robotics, control and compute
 
 - 3.1b: Very rarely, the PhaseSpace cameras will fail to get a lock on the
        LEDs. Hit the emergency stop and reset the experiment.
+
+- 3.1c: If a diagram has been run in external mode, all diagrams will switch from "build" to "build and run" with no warning to the user. The only way to get around this at the moment is to manually check that "build" is selected under the build actions.
