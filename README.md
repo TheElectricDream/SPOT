@@ -4,10 +4,11 @@ This testbed is used by researchers to investigate robotics, control and compute
 
 # Bug Tracking
 
-- 3.1a: Occasionally on first startup the pucks alternate between their on/off state. Hit "STOP" float; start the float again and the bug should be gone.The previous experiment diagram is still running but the user 
-          either started a new experiment, or tried to turn on the pucks.
+- 3.04a: Occasionally on first startup the pucks alternate between their on/off state. Hit "STOP" float; start the float again and the bug should be gone.The previous experiment diagram is still running but the user either started a new experiment, or tried to turn on the pucks.
 
-- 3.1b: Very rarely, the PhaseSpace cameras will fail to get a lock on the
-       LEDs. Hit the emergency stop and reset the experiment.
+- 3.04b: Very rarely, the PhaseSpace cameras will fail to get a lock on the LEDs. Hit the emergency stop and reset the experiment.
 
-- 3.1c: If a diagram has been run in external mode, all diagrams will switch from "build" to "build and run" with no warning to the user. The only way to get around this at the moment is to manually check that "build" is selected under the build actions.
+- 3.04c (FIXED AS OF 3.05): If a diagram has been run in external mode, all diagrams will switch from "build" to "build and run" with no warning to the user. The only way to get around this at the moment is to manually check that "build" is selected under the build actions.
+
+- 3.05a: Animation may buffer and "Stop Animation" may not be instant.
+
