@@ -4,6 +4,12 @@
 
 % Version: 3.03 (Beta Release)
 
+% The following script is the initializer for SPOT 2.0; in this script,
+% users define all initials parameters and/or constants required for
+% simulation and experiment.
+
+% Version: 3.05 (Beta Release)
+
 % Authors: Alexander Crain
 % Legacy: David Rogers & Kirk Hovell
 
@@ -23,9 +29,9 @@ fprintf('|Authors (v3.0): Alex Crain                                      |\n')
 fprintf('|Authors (v2.0): Alex Crain and Kirk Hovell                      |\n')
 fprintf('|Authors (Legacy): Dave Rogers and Kirk Hovell                   |\n')
 fprintf('|                                                                |\n')
-fprintf('|Current Version: 3.04 (Beta Release)                            |\n')
+fprintf('|Current Version: 3.05 (Beta Release)                            |\n')
 fprintf('|                                                                |\n')
-fprintf('|Last Edit: 2020-10-18                                           |\n')
+fprintf('|Last Edit: 2021-01-19                                           |\n')
 fprintf('|                                                                |\n')
 fprintf('|----------------------------------------------------------------|\n')
 fprintf('|----------------------------------------------------------------|\n')
@@ -198,7 +204,7 @@ home_states_BLUE          = [ xLength/2-0.9; yLength/2+0.5; 0];  % [m; m; rad]
                                               
 %% Start the graphical user interface:
 
-run('GUI_v3_04')
+run('GUI_v3_05')
 
 %% Start UDP receive interface
 
