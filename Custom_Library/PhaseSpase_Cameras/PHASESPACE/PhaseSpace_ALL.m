@@ -20,6 +20,7 @@ classdef PhaseSpace_ALL < matlab.System ...
     properties
         % Platform Selection
         platformSelection = 1;
+        PS_SampleRate = 10;
     end
     
     properties (Nontunable)
@@ -47,7 +48,7 @@ classdef PhaseSpace_ALL < matlab.System ...
                 % Call C-function implementing device initialization
                  coder.cinclude('owl.hpp');
                  coder.cinclude('phasespace_headers.h');
-                 coder.ceval('initialize_phasespace',obj.platformSelection);
+                 coder.ceval('initialize_phasespace',obj.platformSelection,obj.PS_SampleRate);
             end
         end
         
@@ -78,7 +79,7 @@ classdef PhaseSpace_ALL < matlab.System ...
                              coder.ref(y8),coder.ref(y9),coder.ref(y10),...
                              coder.ref(y11),coder.ref(y12),coder.ref(y13),...
                              obj.platformSelection);
-                y  =[y7/10, y1/1000, y2/1000, y3, y4/1000, y5/1000, y6, y8/1000, y9/1000, y10/1000, y11/1000, y12/1000, y13/1000];
+                y  =[y7/obj.PS_SampleRate, y1/1000, y2/1000, y3, y4/1000, y5/1000, y6, y8/1000, y9/1000, y10/1000, y11/1000, y12/1000, y13/1000];
 
             end
         end
@@ -146,8 +147,7 @@ classdef PhaseSpace_ALL < matlab.System ...
             header = matlab.system.display.Header('PhaseSpace_ALL','Title',...
                 'Initialize and Stream PhaseSpace','Text',...
                 ['This simulink block initializes the PhaseSpace cameras to '...
-                'collect position data. The output of this block is a [1x3] vector '...
-                'containing the position in [m] and the attitude in [rad].' newline]);
+                'collect position data and attitude data for the platforms and arm.' newline]);
         end
         
     end

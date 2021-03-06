@@ -3,6 +3,7 @@
 #include <ctime>
 #include <cerrno>
 #include <unistd.h>
+#include <string>     // std::string, std::to_string
 
 #include <math.h>       
 #include <signal.h>
@@ -17,7 +18,7 @@ OWL::Rigids rigids;
 
 /* initialize_phasespace() initializes the options for the phasespace cameras
    and starts streaming data. */
-double initialize_phasespace(double platformSelection)
+double initialize_phasespace(double platformSelection, double PS_SampleRate)
 {
     /* The address is the IP address for the phasespace computer. */
     string address = "192.168.0.109";
@@ -34,7 +35,7 @@ double initialize_phasespace(double platformSelection)
        the samplerate of the function reading the data. If the frequency is 
        too high, the buffer will fill up and there will be a growing time delay
        in the data. */
-    phaseSpaceOptions = "profile=all120 frequency=10";
+    phaseSpaceOptions = "profile=all120 frequency=" + std::to_string(PS_SampleRate);
     
     /* The ID's indicate the location of each LED relative to the center of
        mass for the platform. */
@@ -87,7 +88,7 @@ double initialize_phasespace(double platformSelection)
     /* Start streaming phasespace data. Sending (1) streams data using TCP/IP,
        sending (2) streams data using UDP, and sending (3) streams data using
        UDP but broadcasts to all IP addresses. */
-    owl.streaming(1);
+    owl.streaming(2);
    
 }
 
