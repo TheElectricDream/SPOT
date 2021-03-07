@@ -1,8 +1,8 @@
-% The following script is the initializer for SPOT 2.0; in this script,
+% The following script is the initializer for SPOT 3.0; in this script,
 % users define all initials parameters and/or constants required for
 % simulation and experiment.
 
-% Version: 3.06 (Beta Release)
+% Version: 3.07 (Beta Release)
 
 % Authors: Alexander Crain
 % Legacy: David Rogers & Kirk Hovell
@@ -23,9 +23,9 @@ fprintf('|Authors (v3.0): Alex Crain                                      |\n')
 fprintf('|Authors (v2.0): Alex Crain and Kirk Hovell                      |\n')
 fprintf('|Authors (Legacy): Dave Rogers and Kirk Hovell                   |\n')
 fprintf('|                                                                |\n')
-fprintf('|Current Version: 3.06 (Beta Release)                            |\n')
+fprintf('|Current Version: 3.07 (Beta Release)                            |\n')
 fprintf('|                                                                |\n')
-fprintf('|Last Edit: 2021-03-02                                           |\n')
+fprintf('|Last Edit: 2021-03-07                                           |\n')
 fprintf('|                                                                |\n')
 fprintf('|----------------------------------------------------------------|\n')
 fprintf('|----------------------------------------------------------------|\n')
@@ -177,7 +177,6 @@ thruster_dist2CG_BLUE         = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-5
 
 %%  Set the drop, initial, and home positions for each platform:
 
-
 drop_states_RED           = [2.18401342773438,1.21458435058594,-3.12528014183044]; % [m; m; rad]
 drop_states_BLACK         = [1.36947387695313,1.22175756835938,-0.0161599479615688];  % [m; m; rad]
 drop_states_BLUE          = [ xLength/2+0.9; yLength/2+0.5; 0];         % [m; m; rad]
@@ -192,8 +191,6 @@ home_states_BLUE          = [ xLength/2-0.9; yLength/2+0.5; 0];  % [m; m; rad]
                                               
 %% Start the graphical user interface:
 
-run('GUI_v3_06')
-
-%% Start UDP receive interface
+run('GUI_v3_07')
 
 
