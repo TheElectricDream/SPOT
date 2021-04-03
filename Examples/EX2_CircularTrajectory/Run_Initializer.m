@@ -1,4 +1,4 @@
-% The following script is the initializer for SPOT 2.0; in this script,
+% The following script is the initializer for SPOT 3.0; in this script,
 % users define all initials parameters and/or constants required for
 % simulation and experiment.
 
@@ -25,7 +25,7 @@ fprintf('|Authors (Legacy): Dave Rogers and Kirk Hovell                   |\n')
 fprintf('|                                                                |\n')
 fprintf('|Current Version: 3.07 (Beta Release)                            |\n')
 fprintf('|                                                                |\n')
-fprintf('|Last Edit: 2021-03-02                                           |\n')
+fprintf('|Last Edit: 2021-03-07                                           |\n')
 fprintf('|                                                                |\n')
 fprintf('|----------------------------------------------------------------|\n')
 fprintf('|----------------------------------------------------------------|\n')
@@ -89,7 +89,7 @@ noise_variance_BLUE            = 0;
 % folder, and change line 204 from owl.frequency(10) to 
 % owl.frequency(serverRate):
 
-baseRate                       = 0.1;      % 20 Hz
+baseRate                       = 0.05;      % 20 Hz
 
 %% Set the frequency that the data is being sent up from the PhaseSpace:
 
@@ -98,26 +98,26 @@ baseRate                       = 0.1;      % 20 Hz
 % setting this equal to or higher then the baseRate causes the data to
 % buffer in the UDP send.
 
-serverRate                     = 0.2;       % 10 Hz
+serverRate                     = 0.1;       % 10 Hz
 
 %% Set the duration of each major phase in the experiment, in seconds:
 
 Phase0_Duration                = 10;        % [s]
 Phase1_Duration                = 5;         % [s]
-Phase2_Duration                = 25;        % [s]
-Phase3_Duration                = 77;        % [s]
+Phase2_Duration                = 20;        % [s]
+Phase3_Duration                = 131;        % [s]
 Phase4_Duration                = 20;        % [s]
-Phase5_Duration                = 5;         % [s]
+Phase5_Duration                = 20;         % [s]
 
 % Set the duration of the sub-phases. Sub-phases occur during the
 % experiment phase (Phase3_Duration) and must be manually inserted into the
 % diagram. The total duration of the sub-phases must equal the length of
 % the Phase3_Duration.
 
-Phase3_SubPhase1_Duration      = 1;        % [s]
-Phase3_SubPhase2_Duration      = 1;        % [s]
-Phase3_SubPhase3_Duration      = 30;        % [s]
-Phase3_SubPhase4_Duration      = 45;       % [s]
+Phase3_SubPhase1_Duration      = 5;        % [s]
+Phase3_SubPhase2_Duration      = 5;        % [s]
+Phase3_SubPhase3_Duration      = 1;        % [s]
+Phase3_SubPhase4_Duration      = 120;        % [s]
 
 % Determine the total experiment time from the durations:
 
@@ -175,24 +175,17 @@ thruster_dist2CG_RED          = [49.92;-78.08;70.46;-63.54;81.08;-50.42;57.44;-7
 thruster_dist2CG_BLACK        = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-55.94];
 thruster_dist2CG_BLUE         = [83.42;-52.58;55.94;-60.05;54.08;-53.92;77.06;-55.94];
 
-load('100NodeSolution_FreeFloating_DIDO.mat');
-
-Pos_J1  = [primal.time'+42,primal.states(4,:)'];
-Pos_J2  = [primal.time'+42,primal.states(5,:)'];
-Pos_J3  = [primal.time'+42,primal.states(6,:)'];
-
 %%  Set the drop, initial, and home positions for each platform:
 
-
-drop_states_RED           = [ xLength/2+1.1; yLength/2; pi]; % [m; m; rad]
+drop_states_RED           = [2.18401342773438,1.21458435058594,-3.12528014183044]; % [m; m; rad]
 drop_states_BLACK         = [1.36947387695313,1.22175756835938,-0.0161599479615688];  % [m; m; rad]
 drop_states_BLUE          = [ xLength/2+0.9; yLength/2+0.5; 0];         % [m; m; rad]
 
-init_states_RED           = [ xLength/2+1.1; yLength/2; pi]; % [m; m; rad]
+init_states_RED           = [ xLength/2+0.7; yLength/2; pi]; % [m; m; rad]
 init_states_BLACK         = [ xLength/2; yLength/2; 0];      % [m; m; rad]
 init_states_BLUE          = [ xLength/2+0.9; yLength/2+0.5; 0];      % [m; m; rad]
 
-home_states_RED           = [ xLength/2+1.1; yLength/2; pi]; % [m; m; rad]
+home_states_RED           = [ xLength/2+0.7; yLength/2; pi]; % [m; m; rad]
 home_states_BLACK         = [ xLength/2; yLength/2; 0];  % [m; m; rad]
 home_states_BLUE          = [ xLength/2-0.9; yLength/2+0.5; 0];  % [m; m; rad]
                                               
