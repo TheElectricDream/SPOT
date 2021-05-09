@@ -19,12 +19,13 @@ classdef InitializeForPosition < matlab.System ...
     
     properties
         
-        P_GAIN          = 400;
-        I_GAIN          = 0;
-        D_GAIN          = 200;
-        MAX_POSITION    = 3072;
-        MIN_POSITION    = 1024;
-        VELOCITY_LIMIT  = 0;
+        P_GAIN                = 400;
+        I_GAIN                = 0;
+        D_GAIN                = 200;
+        MAX_POSITION          = 3072;
+        MIN_POSITION          = 1024;
+        VELOCITY_PROFILE      = 0;
+        ACCELERATION_PROFILE  = 0;
         
     end
     
@@ -53,7 +54,7 @@ classdef InitializeForPosition < matlab.System ...
                  coder.cinclude('dynamixel_sdk.h');
                  coder.cinclude('dynamixel_functions.h');
                  coder.ceval('initialize_dynamixel_position_control',obj.P_GAIN, obj.I_GAIN, ...
-                     obj.D_GAIN, obj.MAX_POSITION, obj.MIN_POSITION, obj.VELOCITY_LIMIT);
+                     obj.D_GAIN, obj.MAX_POSITION, obj.MIN_POSITION, obj.VELOCITY_PROFILE, obj.ACCELERATION_PROFILE);
             end
         end
         
@@ -127,7 +128,9 @@ classdef InitializeForPosition < matlab.System ...
             header = matlab.system.display.Header('InitializeForPosition','Title',...
                 'Dynamixel Actuator - Initialize Position Control','Text',...
                 ['This simulink block initializes the actuators for position control. '...
-                'This block must be placed ONCE in the diagram, at the top level.' newline]);
+                'This block must be placed ONCE in the diagram, at the top level.'...
+                ' Velocity and acceleration profile values indicate the max velocity and acceleration '...
+                'for the resulting motion; 0 = infinite' newline]);
         end
         
     end

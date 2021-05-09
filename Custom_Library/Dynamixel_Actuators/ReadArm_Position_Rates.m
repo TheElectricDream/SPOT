@@ -1,15 +1,15 @@
-classdef InitializeForSpeed < matlab.System ...
+classdef ReadArm_Position_Rates < realtime.internal.SourceSampleTime ...
         & coder.ExternalDependency ...
         & matlab.system.mixin.Propagates ...
         & matlab.system.mixin.CustomIcon
     %
-    % System object template for a sink block.
+    % System object template for a source block.
     % 
     % This template includes most, but not all, possible properties,
     % attributes, and methods that you can implement for a System object in
     % Simulink.
     %
-    % NOTE: When renaming the class name Sink, the file name and
+    % NOTE: When renaming the class name Source, the file name and
     % constructor name must be updated to use the class name.
     %
     
@@ -18,48 +18,54 @@ classdef InitializeForSpeed < matlab.System ...
     %#ok<*EMCA>
     
     properties
-        
-        P_GAIN            = 100;
-        I_GAIN            = 1920;
-        VELOCITY_LIMIT    = 1023;
-        ACCELERATION_TIME = 2000;
-        
+
     end
     
     properties (Nontunable)
-
+        % Public, non-tunable properties.
     end
     
     properties (Access = private)
-
+        % Pre-computed constants.
     end
     
     methods
         % Constructor
-        function obj = InitializeForSpeed(varargin)
+        function obj = ReadArm_Position(varargin)
             % Support name-value pair arguments when constructing the object.
             setProperties(obj,nargin,varargin{:});
         end
     end
     
+    
     methods (Access=protected)
-        function setupImpl(obj)
+        function setupImpl(obj) 
             if isempty(coder.target)
                 % Place simulation setup code here
             else
                 % Call C-function implementing device initialization
-                 coder.cinclude('dynamixel_sdk.h');
-                 coder.cinclude('dynamixel_functions.h');
-                 coder.ceval('initialize_dynamixel_speed_control',obj.P_GAIN, obj.I_GAIN, ...
-                      obj.VELOCITY_LIMIT, obj.ACCELERATION_TIME);
             end
         end
         
-        function stepImpl(~,~)  
+        function [theta1, theta2, theta3, omega1, omega2, omega3] = stepImpl(obj)
+            
+            theta1  = double(0);
+            theta2  = double(0);
+            theta3  = double(0);
+            
+            omega1  = double(0);
+            omega2  = double(0);
+            omega3  = double(0);
+
             if isempty(coder.target)
-                % Place simulation output code here 
+                % Place simulation output code here
             else
-                % Call C-function implementing device output
+                coder.cinclude('dynamixel_sdk.h');
+                coder.cinclude('dynamixel_functions.h');
+                coder.ceval('read_dynamixel_position',coder.ref(theta1),...
+                             coder.ref(theta2),coder.ref(theta3),coder.ref(omega1),...
+                             coder.ref(omega2),coder.ref(omega3));
+
             end
         end
         
@@ -68,45 +74,68 @@ classdef InitializeForSpeed < matlab.System ...
                 % Place simulation termination code here
             else
                 % Call C-function implementing device termination
-                %coder.ceval('sink_terminate');
             end
         end
     end
     
     methods (Access=protected)
-        %% Define input properties
+        %% Define output properties
         function num = getNumInputsImpl(~)
             num = 0;
         end
         
         function num = getNumOutputsImpl(~)
-            num = 0;
+            num = 6;
         end
         
-        function flag = isInputSizeLockedImpl(~,~)
+        function flag = isOutputSizeLockedImpl(~,~)
             flag = true;
         end
         
-        function varargout = isInputFixedSizeImpl(~,~)
+        function varargout = isOutputFixedSizeImpl(~,~)
             varargout{1} = true;
+            varargout{2} = true;
+            varargout{3} = true;
+            varargout{4} = true;
+            varargout{5} = true;
+            varargout{6} = true;
         end
         
-        function flag = isInputComplexityLockedImpl(~,~)
+        function flag = isOutputComplexityLockedImpl(~,~)
             flag = true;
         end
         
-        function validateInputsImpl(~, ~)
-            if isempty(coder.target)
-                % Run input validation only in Simulation
-                % validateattributes(u,{'double'},{'scalar'},'','u');
-            end
+        function varargout = isOutputComplexImpl(~)
+            varargout{1} = false;
+            varargout{2} = false;
+            varargout{3} = false;
+            varargout{4} = false;
+            varargout{5} = false;
+            varargout{6} = false;
+        end
+        
+        function varargout = getOutputSizeImpl(~)
+            varargout{1} = [1,1];
+            varargout{2} = [1,1];
+            varargout{3} = [1,1];
+            varargout{4} = [1,1];
+            varargout{5} = [1,1];
+            varargout{6} = [1,1];
+        end
+        
+        function varargout = getOutputDataTypeImpl(~)
+            varargout{1} = 'double';
+            varargout{2} = 'double';
+            varargout{3} = 'double';
+            varargout{4} = 'double';
+            varargout{5} = 'double';
+            varargout{6} = 'double';
         end
         
         function icon = getIconImpl(~)
             % Define a string as the icon for the System block in Simulink.
-            icon = 'InitializeForSpeed';
-        end  
-        
+            icon = 'ReadArm_Position_Rates';
+        end    
     end
     
     methods (Static, Access=protected)
@@ -118,20 +147,18 @@ classdef InitializeForSpeed < matlab.System ...
             isVisible = false;
         end
         
-        function header = getHeaderImpl
-            header = matlab.system.display.Header('InitializeForSpeed','Title',...
-                'Dynamixel Actuator - Initialize Speed Control','Text',...
-                ['This simulink block initializes the actuators for speed control. '...
-                'This block must be placed ONCE in the diagram, at the top level.' ...
-                'The acceleration time [ms] dictates how much time is spent accelerating'...
-                ' the arm to the desired speed, 0 = as fast as possible.' newline]);
+       function header = getHeaderImpl
+            header = matlab.system.display.Header('ReadArm_Position_Rates','Title',...
+                'Read Dynamixel - Joint Angles and Rates','Text',...
+                ['This block read the joint angles and rates from the encoders on the'...
+                 ' dynamixel actuators. The output is the 3 joint angles in radians and their angular rates.' newline]);
         end
         
     end
     
     methods (Static)
         function name = getDescriptiveName()
-            name = 'InitializeForSpeed';
+            name = 'ReadArm_Position_Rates';
         end
         
         function b = isSupportedContext(context)
@@ -140,6 +167,7 @@ classdef InitializeForSpeed < matlab.System ...
         
         function updateBuildInfo(buildInfo, context)
             if context.isCodeGenTarget('rtw')
+                
                 % Update buildInfo
                 srcDir = fullfile(fileparts(mfilename('fullpath')),'src');
                 includeDir = fullfile(fileparts(mfilename('fullpath')),'include');
