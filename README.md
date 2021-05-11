@@ -12,3 +12,4 @@ This testbed is used by researchers to investigate robotics, control and compute
 
 - 3.05a: Animation may buffer and "Stop Animation" may not be instant.
 
+- The Pi must be unplugged before plugging in the charging cable. Kirk believes this is because the platforms have a floating ground, which, upon being immediately being brought to the grid's ground, sends an electrical pulse through the platform which damages the Pi. A possible solution is to install a capacitor on the Negative line of the platform to absorb such pulses.
