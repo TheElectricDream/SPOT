@@ -68,7 +68,9 @@ classdef InitializeForSpeed < matlab.System ...
                 % Place simulation termination code here
             else
                 % Call C-function implementing device termination
-                %coder.ceval('sink_terminate');
+                coder.cinclude('dynamixel_sdk.h');
+                coder.cinclude('dynamixel_functions.h');
+                coder.ceval('terminate_dynamixel');
             end
         end
     end
